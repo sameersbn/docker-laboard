@@ -17,6 +17,8 @@ DB_POOL=${DB_POOL:-10}
 
 CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}
 
+NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED:-1}
+
 # use docker link feature to figure out gitlab url
 [[ -z "${GITLAB_URL}" && -n "${GITLAB_PORT_80_TCP_ADDR}" ]] && \
   GITLAB_URL="http://${GITLAB_PORT_80_TCP_ADDR}"
@@ -72,7 +74,7 @@ appStart () {
   sudo -u laboard -H node_modules/gulp/bin/gulp.js app  # for some reason this needs to be done twice
 
   cd ${INSTALL_DIR}
-  exec sudo -u laboard -H authbind node server
+  exec sudo -u laboard -H NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED} authbind node server
 }
 
 appHelp () {

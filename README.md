@@ -91,6 +91,8 @@ docker run --name=laboard -it --rm -p 10080:80 --link mysql:mysql \
   sameersbn/laboard:1.0.1
 ```
 
+*add '-e NODE_TLS_REJECT_UNAUTHORIZED=0' if your GitLab server uses self-signed SSL certificates*
+
 Alternately, if the GitLab and Laboard servers are running on the same host, you can take advantage of docker links. Lets consider that the GitLab server is running on the same host and has the name **gitlab**, then using docker links:
 
 ```bash
@@ -239,6 +241,7 @@ Below is the complete list of available options that can be used to customize yo
 - **DB_PASS**: The database database password. Defaults to no password
 - **DB_POOL**: The database database connection pool count. Defaults to `10`.
 - **CA_CERTIFICATES_PATH**: List of SSL certificates to trust. Defaults to `/home/laboard/data/certs/ca.crt`.
+- **NODE_TLS_REJECT_UNAUTHORIZED**: Disable rejection of self-signed SSL certificates. Defaults to `1`. Set this option to `0` if your gitlab server uses self-signed SSL certificates.
 
 # Shell Access
 
