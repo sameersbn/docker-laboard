@@ -1,7 +1,7 @@
 {
     "gitlab_url": "{{GITLAB_URL}}",
     "gitlab_version": "{{GITLAB_API_VERSION}}",
-    "data_dir": "/home/laboard/laboard/data",
+    "data_dir": "/home/laboard/data/data",
     "port": 80,
     "mysql": {
         "host": "{{DB_HOST}}",
