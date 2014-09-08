@@ -1,0 +1,107 @@
+#!/bin/bash
+set -e
+
+INSTALL_DIR="/home/laboard/laboard"
+DATA_DIR="/home/laboard/data"
+SETUP_DIR="/app"
+
+GITLAB_URL=${GITLAB_URL:-}
+GITLAB_API_VERSION=${GITLAB_API_VERSION:-7.2}
+
+DB_HOST=${DB_HOST:-}
+DB_PORT=${DB_PORT:-}
+DB_NAME=${DB_NAME:-laboard_production}
+DB_USER=${DB_USER:-root}
+DB_PASS=${DB_PASS:-}
+DB_POOL=${DB_POOL:-10}
+
+CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}
+
+# use docker link feature to figure out gitlab url
+[[ -z "${GITLAB_URL}" && -n "${GITLAB_PORT_80_TCP_ADDR}" ]] && \
+  GITLAB_URL="http://${GITLAB_PORT_80_TCP_ADDR}"
+
+GITLAB_URL=$(sed 's/\//\\\//g' <<< $GITLAB_URL)
+
+# fallback to using the port 3306
+DB_PORT=${DB_PORT:-3306}
+
+# is a mysql container linked?
+if [ -n "${MYSQL_PORT_3306_TCP_ADDR}" ]; then
+  DB_HOST=${DB_HOST:-${MYSQL_PORT_3306_TCP_ADDR}}
+  DB_PORT=${DB_PORT:-${MYSQL_PORT_3306_TCP_PORT}}
+fi
+
+if [ "${DB_HOST}" == "" -o "${DB_HOST}" == "localhost" ]; then
+  echo "Please provide database connection settings."
+  exit 1
+fi
+
+cd ${INSTALL_DIR}
+
+# copy default configuration templates
+sudo -u laboard -H cp ${SETUP_DIR}/config/client.js config/client.js
+sudo -u laboard -H cp ${SETUP_DIR}/config/server.json config/server.json
+
+# build ca-certificates
+if [ -f "${CA_CERTIFICATES_PATH}" ]; then
+  echo "Updating CA certificates..."
+  [ -f "${CA_CERTIFICATES_PATH}" ] && \
+    cp "${CA_CERTIFICATES_PATH}" /usr/local/share/ca-certificates/ca.crt
+  update-ca-certificates --fresh >/dev/null 2>&1
+fi
+
+# configure server url
+sudo -u laboard -H sed 's/{{GITLAB_URL}}/'"${GITLAB_URL}"'/' -i config/client.js
+
+sudo -u laboard -H sed 's/{{GITLAB_URL}}/'"${GITLAB_URL}"'/' -i config/server.json
+sudo -u laboard -H sed 's/{{GITLAB_API_VERSION}}/'"${GITLAB_API_VERSION}"'/' -i config/server.json
+sudo -u laboard -H sed 's/{{DB_HOST}}/'"${DB_HOST}"'/' -i config/server.json
+sudo -u laboard -H sed 's/{{DB_PORT}}/'"${DB_PORT}"'/' -i config/server.json
+sudo -u laboard -H sed 's/{{DB_NAME}}/'"${DB_NAME}"'/' -i config/server.json
+sudo -u laboard -H sed 's/{{DB_USER}}/'"${DB_USER}"'/' -i config/server.json
+sudo -u laboard -H sed 's/{{DB_PASS}}/'"${DB_PASS}"'/' -i config/server.json
+sudo -u laboard -H sed 's/{{DB_POOL}}/'"${DB_POOL}"'/' -i config/server.json
+
+# take ownership of ${DATA_DIR}
+chown laboard:laboard ${DATA_DIR}
+
+appStart () {
+  echo "Starting Laboard..."
+  cd ${INSTALL_DIR}/client
+  sudo -u laboard -H node_modules/gulp/bin/gulp.js app  # for some reason this needs to be done twice
+
+  cd ${INSTALL_DIR}
+  exec sudo -u laboard -H authbind node server
+}
+
+appHelp () {
+  echo "Available options:"
+  echo " app:start          - Starts the gitlab-ci server (default)"
+  echo " app:help           - Displays the help"
+  echo " [command]          - Execute the specified linux command eg. bash."
+}
+
+case "$1" in
+  app:start)
+    appStart
+    ;;
+  app:help)
+    appHelp
+    ;;
+  *)
+    if [ -x $1 ]; then
+      $1
+    else
+      prog=$(which $1)
+      if [ -n "${prog}" ] ; then
+        shift 1
+        $prog $@
+      else
+        appHelp
+      fi
+    fi
+    ;;
+esac
+
+exit 0
