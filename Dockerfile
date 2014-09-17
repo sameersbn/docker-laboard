@@ -7,7 +7,7 @@ RUN apt-get update \
  && wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
  && echo 'deb https://deb.nodesource.com/node jessie main' > /etc/apt/sources.list.d/nodesource.list \
  && apt-get update \
- && apt-get install -y build-essential git nodejs authbind \
+ && apt-get install -y git nodejs authbind gcc g++ make python libc6-dev \
  && npm install -g bower \
  && rm -rf /var/lib/apt/lists/* # 20140818
 
