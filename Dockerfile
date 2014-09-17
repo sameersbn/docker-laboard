@@ -3,7 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 RUN echo -n > /etc/apt/apt.conf.d/01proxy
 RUN wget -q https://deb.nodesource.com/setup -O - | bash - \
- && apt-get install -y build-essential checkinstall git nodejs authbind \
+ && apt-get install -y build-essential git nodejs authbind \
  && npm install -g bower \
  && rm -rf /var/lib/apt/lists/* # 20140818
 
