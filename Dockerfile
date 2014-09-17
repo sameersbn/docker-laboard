@@ -1,7 +1,6 @@
 FROM sameersbn/debian:jessie.20140918
 MAINTAINER sameer@damagehead.com
 
-RUN echo -n > /etc/apt/apt.conf.d/01proxy
 RUN apt-get update \
  && apt-get install -y apt-transport-https \
  && wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
