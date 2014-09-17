@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20140818
+FROM sameersbn/debian:jessie.20140918
 MAINTAINER sameer@damagehead.com
 
 RUN echo -n > /etc/apt/apt.conf.d/01proxy
@@ -9,7 +9,7 @@ RUN apt-get update \
  && apt-get update \
  && apt-get install -y git nodejs authbind gcc g++ make python libc6-dev \
  && npm install -g bower \
- && rm -rf /var/lib/apt/lists/* # 20140818
+ && rm -rf /var/lib/apt/lists/* # 20140918
 
 ADD assets/install /app/
 RUN chmod 755 /app/install
