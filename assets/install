@@ -22,6 +22,8 @@ sudo -u laboard -H cat > /home/laboard/.bowerrc <<EOF
 }
 EOF
 
+ln -sf /usr/bin/nodejs /usr/bin/node
+
 # download and install laboard
 mkdir -p ${INSTALL_DIR}
 wget -nv "https://gitlab.com/jubianchi/laboard/repository/archive.tar.gz?ref=${LABOARD_VERSION}" -O - | \
