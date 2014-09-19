@@ -25,7 +25,7 @@ Dockerfile to build a [Laboard](https://gitlab.com/jubianchi/laboard) container 
 
 ## Version
 
-Current Version: **1.0.1**
+Current Version: **1.0.2**
 
 # Reporting Issues
 
@@ -66,7 +66,7 @@ docker pull sameersbn/laboard:latest
 You can pull a particular version of Laboard by specifying the version number. For example,
 
 ```bash
-docker pull sameersbn/laboard:1.0.1
+docker pull sameersbn/laboard:1.0.2
 ```
 
 Alternately you can build the image yourself.
@@ -88,7 +88,7 @@ You also require a MySQL database. Please refer to [Database](#database) for ins
 ```bash
 docker run --name=laboard -it --rm -p 10080:80 --link mysql:mysql \
 -e 'GITLAB_URL=http://172.17.0.2' -e 'GITLAB_API_VERSION=7.2' \
-  sameersbn/laboard:1.0.1
+  sameersbn/laboard:1.0.2
 ```
 
 *add '-e NODE_TLS_REJECT_UNAUTHORIZED=0' if your GitLab server uses self-signed SSL certificates*
@@ -98,7 +98,7 @@ Alternately, if the GitLab and Laboard servers are running on the same host, you
 ```bash
 docker run --name=laboard -it --rm -p 10080:80 --link mysql:mysql \
 -link gitlab:gitlab -e 'GITLAB_API_VERSION=7.2' \
-sameersbn/laboard:1.0.1
+sameersbn/laboard:1.0.2
 ```
 
 Point your browser to `http://localhost:10080`.
@@ -125,7 +125,7 @@ Volumes can be mounted in docker by specifying the **'-v'** option in the docker
 ```bash
 docker run --name=laboard -it --rm \
   -v /opt/laboard/data:/home/laboard/data \
-  sameersbn/laboard:1.0.1
+  sameersbn/laboard:1.0.2
 ```
 
 ## Database
@@ -155,7 +155,7 @@ docker run --name=laboard -it --rm \
   -e 'GITLAB_URL=http://172.17.0.2' \
   -e 'DB_HOST=192.168.1.100' -e 'DB_NAME=laboard_production' \
   -e 'DB_USER=laboard' -e 'DB_PASS=password' \
-  sameersbn/laboard:1.0.1
+  sameersbn/laboard:1.0.2
 ```
 
 #### Linking to MySQL Container
@@ -212,7 +212,7 @@ docker run --name=laboard -it --rm --link mysql:mysql \
   -e 'GITLAB_URL=http://172.17.0.2' -e 'GITLAB_API_VERSION=7.2' \
   -e 'DB_USER=laboard' -e 'DB_PASS=password' \
   -e 'DB_NAME=laboard_production' \
-  sameersbn/laboard:1.0.1
+  sameersbn/laboard:1.0.2
 ```
 
 ### Putting it all together
@@ -223,7 +223,7 @@ docker run --name=laboard -d -\
   -e 'GITLAB_URL=http://172.17.0.2' -e 'GITLAB_API_VERSION=7.2' \
   -e 'DB_HOST=192.168.1.100' -e 'DB_NAME=laboard_production' \
   -e 'DB_USER=laboard' -e 'DB_PASS=password' \
-  sameersbn/laboard:1.0.1
+  sameersbn/laboard:1.0.2
 ```
 
 ### Available Configuration Parameters
@@ -272,7 +272,7 @@ To upgrade to newer Laboard releases, simply follow this 3 step upgrade procedur
 - **Step 1**: Update the docker image.
 
 ```bash
-docker pull sameersbn/laboard:1.0.1
+docker pull sameersbn/laboard:1.0.2
 ```
 
 - **Step 2**: Stop and remove the currently running image
@@ -285,7 +285,7 @@ docker rm laboard
 - **Step 3**: Start the image
 
 ```bash
-docker run --name=laboard -d [OPTIONS] sameersbn/laboard:1.0.1
+docker run --name=laboard -d [OPTIONS] sameersbn/laboard:1.0.2
 ```
 
 # References
