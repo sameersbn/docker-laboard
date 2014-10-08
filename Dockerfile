@@ -1,10 +1,8 @@
 FROM sameersbn/ubuntu:14.04.20141001
 MAINTAINER sameer@damagehead.com
 
-RUN apt-get update \
- && apt-get install -y apt-transport-https \
- && wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
- && echo 'deb https://deb.nodesource.com/node trusty main' > /etc/apt/sources.list.d/nodesource.list \
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv C7917B12 \
+ && echo "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu trusty main" >> /etc/apt/sources.list \
  && apt-get update \
  && apt-get install -y git nodejs authbind python make \
  && npm install -g bower \
