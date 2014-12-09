@@ -26,7 +26,7 @@ ln -sf /usr/bin/nodejs /usr/bin/node
 
 # download and install laboard
 mkdir -p ${INSTALL_DIR}
-wget -nv "https://gitlab.com/jubianchi/laboard/repository/archive.tar.gz?ref=${LABOARD_VERSION}" -O - | \
+wget -nv "https://github.com/jubianchi/laboard/archive/${LABOARD_VERSION}.tar.gz" -O - | \
   tar -zvxf - --strip=1 -C ${INSTALL_DIR}
 chown -R laboard:laboard ${INSTALL_DIR}
 
