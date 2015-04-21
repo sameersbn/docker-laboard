@@ -22,7 +22,7 @@
 
 # Introduction
 
-Dockerfile to build a [Laboard](https://gitlab.com/jubianchi/laboard) container image.
+Dockerfile to build a [Laboard](https://gitlab.com/laboard/laboard) container image.
 
 ## Version
 
@@ -302,5 +302,5 @@ docker run --name=laboard -d [OPTIONS] sameersbn/laboard:1.0.2
 ```
 
 # References
-  * https://gitlab.com/jubianchi/laboard
-  * https://gitlab.com/jubianchi/laboard/blob/master/README.md
+  * https://gitlab.com/laboard/laboard
+  * https://gitlab.com/laboard/laboard/blob/master/README.md
