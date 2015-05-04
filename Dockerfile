@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20150323
+FROM sameersbn/ubuntu:14.04.20150504
 MAINTAINER sameer@damagehead.com
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv C7917B12 \
@@ -6,7 +6,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv C7917B12 \
  && apt-get update \
  && apt-get install -y git nodejs authbind python make \
  && npm install -g bower \
- && rm -rf /var/lib/apt/lists/* # 20150323
+ && rm -rf /var/lib/apt/lists/* # 20150504
 
 ADD assets/install /app/
 RUN chmod 755 /app/install
