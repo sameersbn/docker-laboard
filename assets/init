@@ -74,7 +74,7 @@ appStart () {
   sudo -u laboard -H node_modules/gulp/bin/gulp.js app  # for some reason this needs to be done twice
 
   cd ${INSTALL_DIR}
-  exec sudo -u laboard -H NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED} authbind node server
+  exec gosu laboard NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED} authbind node server
 }
 
 appHelp () {
