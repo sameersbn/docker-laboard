@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20150805
+FROM sameersbn/ubuntu:14.04.20150816
 MAINTAINER sameer@damagehead.com
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv C7917B12 \
