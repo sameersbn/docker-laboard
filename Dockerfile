@@ -4,7 +4,7 @@ MAINTAINER sameer@damagehead.com
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv C7917B12 \
  && echo "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu trusty main" >> /etc/apt/sources.list \
  && apt-get update \
- && apt-get install -y git nodejs authbind python make \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y git nodejs authbind python make \
  && npm install -g bower \
  && rm -rf /var/lib/apt/lists/*
 

@@ -9,7 +9,7 @@ INSTALL_DIR="/home/laboard/laboard"
 apt-get update
 
 # install build dependencies
-apt-get install -y gcc g++ libc6-dev
+DEBIAN_FRONTEND=noninteractive apt-get install -y gcc g++ libc6-dev
 
 # create user
 adduser --disabled-login --gecos 'Laboard' laboard
