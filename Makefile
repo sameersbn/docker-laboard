@@ -1,4 +1,4 @@
 all: build
 
 build:
-	@docker build --tag=${USER}/laboard .
+	@docker build --tag=quay.io/sameersbn/laboard .
