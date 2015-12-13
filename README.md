@@ -1,3 +1,7 @@
+> **NOTICE**
+>
+> This image has reached End-of-Life.
+
 # Table of Contents
 
 - [Introduction](#introduction)
